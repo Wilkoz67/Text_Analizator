@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- Cursor spotlight -->
+  <div id="spotlight"></div>
+
+
+  <!-- Decorative background blob -->
+  <div class="bg-art">
+    <svg viewBox="0 0 600 600">
+      <path d="M421,327Q389,404,300,421Q211,438,160,369Q109,300,152,225Q195,150,279,130Q363,110,411,178Q459,246,421,327Z"/>
+    </svg>
+  </div>
+
+  <div class="app">
+
+
+    <!-- TOP BAR -->
+    <header class="topbar glass">
+      <div class="logo">Text Analyzer</div>
+      <div class="lang">
+        <a href="/lang/en">EN</a>
+        <a href="/lang/pl">PL</a>
+        <a href="/lang/ru">RU</a>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="dashboard">
+
+      <!-- LEFT -->
+      <section class="panel glass">
+        <h1>{{ t.title }}</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+
+          <label>{{ t.text }}</label>
+          <textarea name="text" placeholder="Paste text here...">{{ last_text }}</textarea>
+
+
+          <div class="grid">
+            <div>
+              <label>{{ t.file }}</label>
+              <input type="file" name="file">
+            </div>
+
+            <div>
+              <label>{{ t.search }}</label>
+              <input name="search">
+            </div>
+
+            <div>
+              <label>{{ t.minlen }}</label>
+              <input type="number" name="minlen" value="1">
+            </div>
+
+            <div>
+              <label>{{ t.sort }}</label>
+              <select name="sort">
+                <option value="freq">{{ t.freq }}</option>
+                <option value="alpha">{{ t.alpha }}</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" id="analyze-btn">
+             <span class="btn-text">{{ t.analyze }}</span>
+             <span class="btn-loader"></span>
+          </button>
+
+        </form>
+      </section>
+
+      <!-- RIGHT -->
+      <section class="stats-area">
+        <div class="stat glass">
+          <span>{{ t.words }}</span>
+          <strong>{{ stats.words if stats else "—" }}</strong>
+        </div>
+        <div class="stat glass">
+          <span>{{ t.chars }}</span>
+          <strong>{{ stats.chars if stats else "—" }}</strong>
+        </div>
+        <div class="stat glass">
+          <span>{{ t.sentences }}</span>
+          <strong>{{ stats.sentences if stats else "—" }}</strong>
+        </div>
+        <div class="stat glass">
+          <span>{{ t.paragraphs }}</span>
+          <strong>{{ stats.paragraphs if stats else "—" }}</strong>
+        </div>
+      </section>
+
+        </main>
+  </div>
+
+  <!-- Floating text symbols -->
+  <div class="floating-symbols">
+    <span>TXT</span>
+    <span>{ }</span>
+    <span>Σ</span>
+    <span>Aa</span>
+    <span>#</span>
+  </div>
+
+
+
+  <script>
+    const form = document.querySelector("form");
+    const btn = document.getElementById("analyze-btn");
+
+    if (form && btn) {
+      form.addEventListener("submit", () => {
+        btn.classList.add("loading");
+        btn.querySelector(".btn-text").textContent = "Analyzing...";
+     });
+    }
+</script>
+
+<script>
+  const spotlight = document.getElementById("spotlight");
+
+  if (spotlight) {
+    document.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+
+      spotlight.style.setProperty("--x", `${x}%`);
+      spotlight.style.setProperty("--y", `${y}%`);
+    });
+  }
+</script>
+
+
+</body>
+</html>
+

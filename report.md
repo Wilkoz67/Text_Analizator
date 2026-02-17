@@ -1,0 +1,6 @@
+| Word | Count |
+|---|---|
+| hello | 1 |
+| my | 1 |
+| name | 1 |
+| james | 1 |

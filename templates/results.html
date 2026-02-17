@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="app">
+
+
+<header class="topbar glass">
+  <div class="logo">Text Analyzer</div>
+
+  <div class="header-actions">
+    <!-- Wróć do edycji (z zachowaniem tekstu) -->
+    <button class="back-edit" onclick="goBackEdit()">
+      ← {{ t.back }}
+    </button>
+
+    <!-- Nowa analiza (czyści wszystko) -->
+    <a class="new-analysis" href="/">+ New</a>
+  </div>
+</header>
+
+
+  <main class="dashboard">
+
+    <!-- LEFT PANEL -->
+    <section class="panel glass">
+
+      <h1>{{ t.results }}</h1>
+
+      <div class="stats-area">
+        <div class="stat glass">
+          <span>{{ t.words }}</span>
+          <strong>{{ stats.words }}</strong>
+        </div>
+        <div class="stat glass">
+          <span>{{ t.chars }}</span>
+          <strong>{{ stats.chars }}</strong>
+        </div>
+        <div class="stat glass">
+          <span>{{ t.sentences }}</span>
+          <strong>{{ stats.sentences }}</strong>
+        </div>
+        <div class="stat glass">
+          <span>{{ t.paragraphs }}</span>
+          <strong>{{ stats.paragraphs }}</strong>
+        </div>
+      </div>
+
+      {% if search_word is not none %}
+      <div class="search-result glass">
+        🔍 <b>{{ t.search }} "{{ query }}"</b><br>
+        {{ t.word }}: {{ search_word }} {{ t.times }}<br>
+        {{ t.phrase }}: {{ search_phrase }} {{ t.times }}
+      </div>
+      {% endif %}
+
+    </section>
+
+    <!-- RIGHT PANEL -->
+    <section class="panel glass">
+
+      <h2>{{ t.words }}</h2>
+
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>{{ t.words }}</th>
+            <th>{{ t.count }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for w,c in freq %}
+          <tr>
+            <td>{{ w }}</td>
+            <td>{{ c }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </section>
+
+  </main>
+
+  <footer class="footer glass">
+    📁 report.csv | report.json | report.md | report.html
+  </footer>
+
+</div>
+
+
+<script>
+function goBackEdit() {
+    // Wraca do formularza z zachowanym tekstem (session)
+    window.location.href = "/";
+}
+</script>
+
+
+</body>
+</html>
+
